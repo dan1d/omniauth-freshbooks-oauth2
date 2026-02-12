@@ -1,0 +1,90 @@
+require:
+  - rubocop-rspec
+
+AllCops:
+  TargetRubyVersion: 3.0
+  NewCops: enable
+  Exclude:
+    - "vendor/**/*"
+    - "spec/fixtures/**/*"
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
+    - "*.gemspec"
+
+RSpec/ExampleLength:
+  Max: 15
+
+RSpec/MultipleExpectations:
+  Max: 5
+
+RSpec/NestedGroups:
+  Max: 4
+
+# OmniAuth strategies require stubbing internal methods for testing
+RSpec/SubjectStub:
+  Enabled: false
+
+# We use regular doubles for OmniAuth internal objects
+RSpec/VerifiedDoubles:
+  Enabled: false
+
+# OmniAuth namespace doesn't follow snake_case convention
+RSpec/FilePath:
+  Enabled: false
+
+RSpec/SpecFilePathFormat:
+  Enabled: false
+
+# Development dependencies are fine in gemspec for gems
+Gemspec/DevelopmentDependencies:
+  Enabled: false
+
+# Gem naming convention uses dashes
+Naming/FileName:
+  Exclude:
+    - "lib/omniauth-freshbooks-oauth2.rb"
+
+# OAuth2 strategy classes are complex by nature
+Metrics/ClassLength:
+  Exclude:
+    - "lib/omniauth/strategies/freshbooks_oauth2.rb"
+    - "lib/omniauth/freshbooks_oauth2/token_client.rb"
+
+# Token exchange method is necessarily complex
+Metrics/AbcSize:
+  Exclude:
+    - "lib/omniauth/strategies/freshbooks_oauth2.rb"
+    - "lib/omniauth/freshbooks_oauth2/token_client.rb"
+
+# TokenResult needs many keyword params, TokenClient methods are complex by nature
+Metrics/ParameterLists:
+  Exclude:
+    - "lib/omniauth/freshbooks_oauth2/token_client.rb"
+
+# Token handling methods are necessarily long
+Metrics/MethodLength:
+  Exclude:
+    - "spec/**/*"
+    - "lib/omniauth/strategies/freshbooks_oauth2.rb"
+    - "lib/omniauth/freshbooks_oauth2/token_client.rb"
+
+# OmniAuth strategy tests require message expectations
+RSpec/MessageSpies:
+  Enabled: false
+
+# Disable Capybara cops - not relevant for this gem
+Capybara/RSpec/PredicateMatcher:
+  Enabled: false
+
+# We use OpenStruct for OAuth2 error compatibility
+Style/OpenStructUse:
+  Exclude:
+    - "lib/omniauth/strategies/freshbooks_oauth2.rb"
